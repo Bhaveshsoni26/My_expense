@@ -39,6 +39,18 @@ class _MyHomePageState extends State<MyHomePage> {
         amount: 100.00,
         dateTime: DateTime.now())
   ];
+  final idController = TextEditingController();
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+  _addTransaction(String id ,String title , double amount){
+    print(id);
+    print(title);
+    print(amount);
+    var newTr = Transaction(id: id, title: title, amount: amount, dateTime: DateTime.now());
+    setState(() {
+      transaction.add(newTr);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,17 +63,41 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 TextField(
+                  controller: idController,
+                  decoration: InputDecoration(
+                    hintText: 'Id'
+                  ),
+                ),
+                TextField(
+                  controller: titleController,
                   decoration: InputDecoration(
                     hintText: 'Title'
                   ),
                 ),
                 TextField(
+                  controller: amountController,
                   decoration: InputDecoration(
                     hintText: 'Amount'
                   ),
                 ),
-                ElevatedButton(onPressed: (){},
+                ElevatedButton(onPressed: (){
+                  _addTransaction(idController.text,titleController.text, double.parse(amountController.text));
+                },
                   child: Text('Submit'),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+            color: Colors.black,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(0.5),
+                  child: Text('Show List',style: TextStyle(fontSize: 40,fontWeight: FontWeight.w500,color: Colors.white),),
                 )
               ],
             ),
